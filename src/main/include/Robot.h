@@ -13,6 +13,15 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 class Robot : public frc::TimedRobot {
+  frc::Joystick leftDriveStick{0};
+  frc::Joystick rightDriveStick{1};
+  frc::Jaguar lDrive1{PWMCHANNELDRIVEL1};
+  frc::Jaguar lDrive2{PWMCHANNELDRIVEL2};
+  frc::Jaguar rDrive1{PWMCHANNELDRIVER1};
+  frc::Jaguar rDrive2{PWMCHANNELDRIVER2};
+  frc::SpeedControllerGroup lDrive{lDrive1, lDrive2};
+  frc::SpeedControllerGroup rDrive{rDrive1, rDrive2};
+  frc::DifferentialDrive drive{lDrive, rDrive};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
