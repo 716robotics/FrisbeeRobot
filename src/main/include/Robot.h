@@ -6,11 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-
-#include <string>
-#include "Tunables.h"
-#include <frc/TimedRobot.h>
-#include <frc/smartdashboard/SendableChooser.h>
+#include "uglyIncludes.h"
 
 class Robot : public frc::TimedRobot {
   frc::Joystick leftDriveStick{0};

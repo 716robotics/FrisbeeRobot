@@ -21,7 +21,7 @@ void Robot::RobotPeriodic() {}
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() {
-  drive.TankDrive(leftdrivestick.GetX(), rightdrivestick.GetX(), true);
+  drive.TankDrive(leftDriveStick.GetX(), rightDriveStick.GetX(), true);
 }
 
 void Robot::DisabledInit() {}
