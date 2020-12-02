@@ -8,5 +8,7 @@
 #include <frc/Jaguar.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h>
+#include <XboxController.h>
+#include <frc/RobotDrive.h>
 #include <frc/Compressor.h>
 #include <frc/DoubleSolenoid.h>

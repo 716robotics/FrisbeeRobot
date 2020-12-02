@@ -11,6 +11,7 @@
 class Robot : public frc::TimedRobot {
   frc::Joystick leftDriveStick{0};
   frc::Joystick rightDriveStick{1};
+  frc::XboxController{3};
   frc::Jaguar lDrive1{PWMCHANNELDRIVEL1};
   frc::Jaguar lDrive2{PWMCHANNELDRIVEL2};
   frc::Jaguar rDrive1{PWMCHANNELDRIVER1};
@@ -18,6 +19,7 @@ class Robot : public frc::TimedRobot {
   frc::SpeedControllerGroup lDrive{lDrive1, lDrive2};
   frc::SpeedControllerGroup rDrive{rDrive1, rDrive2};
   frc::DifferentialDrive drive{lDrive, rDrive};
+  frc::RobotDrive::ArcadeDrive
   frc::Compressor compressor;
   frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
   frc::DoubleSolenoid shootAngle{PCMSHOOTANGLER, PCMSHOOTANGLEL};
