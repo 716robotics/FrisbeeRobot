@@ -18,6 +18,9 @@ class Robot : public frc::TimedRobot {
   frc::SpeedControllerGroup lDrive{lDrive1, lDrive2};
   frc::SpeedControllerGroup rDrive{rDrive1, rDrive2};
   frc::DifferentialDrive drive{lDrive, rDrive};
+  frc::Compressor compressor;
+  frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
+  frc::DoubleSolenoid shootAngle{PCMSHOOTANGLER, PCMSHOOTANGLEL};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;

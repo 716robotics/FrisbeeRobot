@@ -8,3 +8,5 @@
 #include <frc/Jaguar.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h>
+#include <frc/Compressor.h>
+#include <frc/DoubleSolenoid.h>
