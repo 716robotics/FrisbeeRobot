@@ -20,6 +20,12 @@ class Robot : public frc::TimedRobot {
   frc::SpeedControllerGroup rDrive{rDrive1, rDrive2};
   frc::DifferentialDrive drive{lDrive, rDrive};
   frc::RobotDrive::ArcadeDrive
+  frc::Compressor compressor;
+  frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
+  frc::DoubleSolenoid shootAngle{PCMSHOOTANGLER, PCMSHOOTANGLEL};
+  frc::Jaguar shooterLoad{PVMSHOOTERLOAD};
+  frc::Jaguar shooter1{PVMSHOOTER1};
+  frc::Jaguar shooter2{PVMSHOOTER2};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;

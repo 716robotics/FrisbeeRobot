@@ -18,7 +18,9 @@ void Robot::RobotInit() {
 
 void Robot::RobotPeriodic() {}
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+  compressor.Start();
+}
 
 void Robot::TeleopPeriodic() {
   drive.TankDrive(leftDriveStick.GetX(), rightDriveStick.GetX(), true);

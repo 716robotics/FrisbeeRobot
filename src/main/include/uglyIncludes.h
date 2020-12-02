@@ -10,3 +10,5 @@
 #include <frc/drive/DifferentialDrive.h>
 #include <XboxController.h>
 #include <frc/RobotDrive.h>
+#include <frc/Compressor.h>
+#include <frc/DoubleSolenoid.h>
