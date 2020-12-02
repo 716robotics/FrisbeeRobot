@@ -24,7 +24,7 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
   drive.TankDrive(leftDriveStick.GetX(), rightDriveStick.GetX(), true);
-  drive.ArcadeDrive(XboxController.GetX(kRightHand), XboxController.GetY(kRightHand), true);
+  drive.ArcadeDrive(xbox.GetX(xbox.kRightHand), xbox.GetY(xbox.kRightHand), true);
 }
 
 void Robot::DisabledInit() {}
