@@ -21,6 +21,9 @@ class Robot : public frc::TimedRobot {
   frc::Compressor compressor;
   frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
   frc::DoubleSolenoid shootAngle{PCMSHOOTANGLER, PCMSHOOTANGLEL};
+  frc::Jaguar shooterLoad{PVMSHOOTERLOAD};
+  frc::Jaguar shooter1{PVMSHOOTER1};
+  frc::Jaguar shooter2{PVMSHOOTER2};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;

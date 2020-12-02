@@ -5,6 +5,9 @@
 #define     PWMCHANNELDRIVEL2   1
 #define     PWMCHANNELDRIVER1   2
 #define     PWMCHANNELDRIVER2   3
+#define     PVMSHOOTER1         6
+#define     PVMSHOOTER2         7
+#define     PVMSHOOTERLOAD      8
 
 #define     PCMSHOOTPUSHERR     0
 #define     PCMSHOOTPUSHERL     1
