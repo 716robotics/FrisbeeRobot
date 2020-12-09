@@ -15,3 +15,4 @@
 #define     PCMSHOOTANGLEL      3
 
 //--Multipliers--
+#define     POWERPERCENTAGE     0.87

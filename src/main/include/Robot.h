@@ -25,6 +25,7 @@ class Robot : public frc::TimedRobot {
   frc::Jaguar shooterLoad{PVMSHOOTERLOAD};
   frc::Jaguar shooter1{PVMSHOOTER1};
   frc::Jaguar shooter2{PVMSHOOTER2};
+  frc::SpeedControllerGroup shooters{shooter1, shooter2};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -34,6 +35,8 @@ class Robot : public frc::TimedRobot {
   void DisabledPeriodic() override;
   void TestInit() override;
   void TestPeriodic() override;
+  bool Load=false;
+  bool Shoot=false;
 
  private:
   frc::SendableChooser<std::string> CM_chooser;
