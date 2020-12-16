@@ -26,6 +26,10 @@ class Robot : public frc::TimedRobot {
   frc::Jaguar shooter1{PVMSHOOTER1};
   frc::Jaguar shooter2{PVMSHOOTER2};
   frc::SpeedControllerGroup shooters{shooter1, shooter2};
+  static constexpr auto i2cPort0 = frc::I2C::Port::kOnboard;
+  static constexpr auto i2cPort1 = frc::I2C::Port::kMXP;
+  rev::ColorSensorV3 colorSensor0{i2cPort0};
+  rev::ColorSensorV3 colorSensor1{i2cPort1};
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
