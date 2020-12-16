@@ -66,14 +66,14 @@ int Robot::ColorSensor(){
   frc::SmartDashboard::PutNumber("Red", (detectedColor.red * 255));
   frc::SmartDashboard::PutNumber("Green", (detectedColor.green * 255));
   frc::SmartDashboard::PutNumber("Blue", (detectedColor.blue * 255));
-  frc::SmartDashboard::PutNumbet("Color", Color);
-  if (proximity > 400) frc::SmartDashboard::PutString("Color Status", "OK");
+  frc::SmartDashboard::PutNumber("Color", Color);
+  if (proximity0 > 400) frc::SmartDashboard::PutString("Color Status", "OK");
   else {
     frc::SmartDashboard::PutString("Color Status", "Not Close Enough"); 
-    C_color = 0;
+    Color = 0;
   }
   frc::SmartDashboard::PutNumber("Color Detected", C_color);
-  return C_color;
+  return Color;
 }
 
 //---Don't touch Below This Comment---
