@@ -35,17 +35,17 @@ void Robot::TestInit() {}
 
 void Robot::TestPeriodic() {
   drive.TankDrive(leftDriveStick.GetX(), rightDriveStick.GetX(), true);
-  if (xbox.GetXButtonPressed()) { Load=!Load; }
+  if (xbox.GetXButtonPressed()) {Load=!Load;}
+  if (xbox.GetYButtonPressed()) {Shoot=!Shoot;}
   shooterLoad.Set(float(Load));
-  if (xbox.GetYButtonPressed()) { Shoot=!Shoot; }
-  shooters.Set(float(Shoot)*POWERPERCENTAGE);
-  if (xbox.GetAButton()) {   shootPusher.Set(shootPusher.kReverse); }
-  else { shootPusher.Set(shootPusher.kForward); }
-  if (xbox.GetTriggerAxis(xbox.kRightHand)>0.8) { shootAngle.Set(shootAngle.kForward)}
-  if (xbox.GetTriggerAxis(xbox.kLeftHand)>0.8) { shootAngle.Set(shootAngle.kReverse)}
+  shooters.Set(float(Shoot)*SHOOTPOWER);
+  if (xbox.GetAButton()) {shootPusher.Set(shootPusher.kReverse);}
+  else {shootPusher.Set(shootPusher.kForward); }
+  if (xbox.GetTriggerAxis(xbox.kRightHand)>0.8) {shootAngle.Set(shootAngle.kForward);}
+  if (xbox.GetTriggerAxis(xbox.kLeftHand)>0.8) {shootAngle.Set(shootAngle.kReverse);}
 }
 
-//Don't touch Below This Comment
+//---Don't touch Below This Comment---
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
