@@ -12,12 +12,12 @@ class Robot : public frc::TimedRobot {
   frc::Joystick leftDriveStick{0};
   frc::Joystick rightDriveStick{1};
   frc::XboxController xbox{3};
+  frc::Jaguar lDrive0{PWMCHANNELDRIVEL0};
   frc::Jaguar lDrive1{PWMCHANNELDRIVEL1};
-  frc::Jaguar lDrive2{PWMCHANNELDRIVEL2};
+  frc::Jaguar rDrive0{PWMCHANNELDRIVER0};
   frc::Jaguar rDrive1{PWMCHANNELDRIVER1};
-  frc::Jaguar rDrive2{PWMCHANNELDRIVER2};
-  frc::SpeedControllerGroup lDrive{lDrive1, lDrive2};
-  frc::SpeedControllerGroup rDrive{rDrive1, rDrive2};
+  frc::SpeedControllerGroup lDrive{lDrive0, lDrive1};
+  frc::SpeedControllerGroup rDrive{rDrive0, rDrive1};
   frc::DifferentialDrive drive{lDrive, rDrive};
   frc::Compressor compressor;
   frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
@@ -39,6 +39,7 @@ class Robot : public frc::TimedRobot {
   void DisabledPeriodic() override;
   void TestInit() override;
   void TestPeriodic() override;
+  double ColorSensorGet(int,int);
   bool Load=false;
   bool Shoot=false;
 
