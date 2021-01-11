@@ -13,3 +13,5 @@
 #include <frc/Servo.h>
 #include <frc/DoubleSolenoid.h>
 #include <ColorSensorV3.h>
+#include <frc/DigitalInput.h>
+#include <frc/Timer.h>

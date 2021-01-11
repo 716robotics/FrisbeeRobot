@@ -22,7 +22,7 @@ class Robot : public frc::TimedRobot {
   frc::Compressor compressor;
   frc::DoubleSolenoid shootPusher{PCMSHOOTPUSHERR, PCMSHOOTPUSHERL};
   frc::DoubleSolenoid shootAngle{PCMSHOOTANGLER, PCMSHOOTANGLEL};
-  frc::Servo shooterLoad{PVMSHOOTERLOAD};
+  frc::Jaguar shooterLoad{PVMSHOOTERLOAD};
   frc::Jaguar shooter1{PVMSHOOTER1};
   frc::Jaguar shooter2{PVMSHOOTER2};
   frc::SpeedControllerGroup shooters{shooter1, shooter2};
@@ -30,6 +30,15 @@ class Robot : public frc::TimedRobot {
   static constexpr auto i2cPort1 = frc::I2C::Port::kMXP;
   rev::ColorSensorV3 colorSensor0{i2cPort0};
   rev::ColorSensorV3 colorSensor1{i2cPort1};
+  frc::DigitalInput slidereturn{DIOSLIDERETURN};
+  frc::Timer shootTimer;
+  frc::Timer slideTimer;
+  enum ShooterState {
+    ss_stop,
+    ss_reload,
+    ss_shoot
+  };
+  ShooterState ss = ss_reload;
  public:
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -39,9 +48,14 @@ class Robot : public frc::TimedRobot {
   void DisabledPeriodic() override;
   void TestInit() override;
   void TestPeriodic() override;
+  void RunFrisbee(int);
   double ColorSensorGet(int,int);
-  bool Load=false;
-  bool Shoot=false;
+  bool Load = false; //for testing only
+  bool Shoot = false;
+  bool lastshoot = false;
+  bool reloadOverride = false;
+  int shootCheck = 0;
+  
 
  private:
   frc::SendableChooser<std::string> CM_chooser;
