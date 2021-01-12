@@ -1,10 +1,7 @@
 //FRC Team 716 Frisbee Robot Code
 
 #include "Robot.h"
-
 #include <iostream>
-
-#include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
   CM_chooser.SetDefaultOption(kControlMapDefault, kControlMapDefault);
@@ -128,8 +125,8 @@ double Robot::ColorSensorGet(int sensor, int mode = 0){
 }
   if (mode == 1){ //return color data (not yet used or really fleshed out)
   frc::Color detectedColor = colorSensor0.GetColor();
-  return 0; //temporary to suppress compiler warnings
   }
+  return 0;
 }
 
 //---Don't touch Below This Comment---

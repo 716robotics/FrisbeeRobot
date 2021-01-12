@@ -15,3 +15,4 @@
 #include <ColorSensorV3.h>
 #include <frc/DigitalInput.h>
 #include <frc/Timer.h>
+#include <frc/smartdashboard/SmartDashboard.h>
