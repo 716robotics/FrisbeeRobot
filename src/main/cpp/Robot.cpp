@@ -14,7 +14,10 @@ void Robot::RobotInit() {
   compressor.Start();
   }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  frc::SmartDashboard::PutNumber("Proximity0", colorSensor0.GetProximity());
+  frc::SmartDashboard::PutNumber("Proximity1", colorSensor1.GetProximity());
+}
 
 void Robot::TeleopInit() {
 
@@ -62,12 +65,12 @@ void Robot::RunFrisbee(int mode){
         shootPusher.Set(shootPusher.kOff);}
       else {shootPusher.Set(shootPusher.kReverse);
         break;}
-      if (ColorSensorGet(1,0) >= FRISBEEDETECTED){ //check if frisbee present in shooter
+      if (ColorSensorGet(0,0) >= FRISBEEDETECTED){ //check if frisbee present in shooter
         shootCheck ++;
         shooterLoad.Set(0);
         break;}
       else{
-        if (ColorSensorGet(0,0) >= FRISBEEDETECTED || xbox.GetXButton()){ //check if fris. avail for reload
+        if (ColorSensorGet(1,0) >= FRISBEEDETECTED || xbox.GetXButton()){ //check if fris. avail for reload
           shooterLoad.Set(1);}
           else{frc::SmartDashboard::PutString("Shooter Status", "Out of Ammo!");
           Shoot = false;

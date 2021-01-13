@@ -21,4 +21,4 @@
 #define     SHOOTPOWER     0.87
 
 //--Misc--
-#define FRISBEEDETECTED     2000 //temporary
+#define FRISBEEDETECTED     450 //temporary
