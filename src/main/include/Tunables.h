@@ -10,7 +10,7 @@
 #define     PVMSHOOTERLOAD      8
 
 #define     PROXIMITY           1
-#define     DIOSLIDERETURN      0
+#define     DIOSLIDERETURN      9
 
 #define     PCMSHOOTPUSHERR     0
 #define     PCMSHOOTPUSHERL     1
@@ -18,7 +18,7 @@
 #define     PCMSHOOTANGLEL      3
 
 //--Multipliers--
-#define     SHOOTPOWER     0.87
+#define     SHOOTPOWER     1
 
 //--Misc--
-#define FRISBEEDETECTED     450 //temporary
+#define FRISBEEDETECTED     275 //temporary

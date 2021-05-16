@@ -15,12 +15,15 @@ void Robot::RobotInit() {
   }
 
 void Robot::RobotPeriodic() {
+  frc::SmartDashboard::PutBoolean("slide", slidereturn.Get());
   frc::SmartDashboard::PutNumber("Proximity0", colorSensor0.GetProximity());
   frc::SmartDashboard::PutNumber("Proximity1", colorSensor1.GetProximity());
+  frc::SmartDashboard::PutNumber("shoot timer", shootTimer.Get());
+  frc::SmartDashboard::PutNumber("No Frisbee",NoFrisbeeCount);
 }
 
 void Robot::TeleopInit() {
-
+shootPusher.Set(shootPusher.kForward);
 }
 
 void Robot::TeleopPeriodic() {
@@ -56,56 +59,65 @@ void Robot::RunFrisbee(int mode){
   //if (!deadman) {ss = ss_stop;} not yet implimented
   if (xbox.GetY(xbox.kRightHand) > 0.7) {shootAngle.Set(shootAngle.kForward);}
   if (xbox.GetY(xbox.kRightHand) < -0.7) {shootAngle.Set(shootAngle.kReverse);}
+  std::cout << ss << std::endl;
   switch(ss)
   {
     case ss_reload:
     shootCheck = 0;
     frc::SmartDashboard::PutString("Shooter Status", "Reloading");
-      if (slidereturn.Get()){shootCheck++; //checks if shootpusher has returned to where it should be
-        shootPusher.Set(shootPusher.kOff);}
-      else {shootPusher.Set(shootPusher.kReverse);
+      if (!slidereturn.Get()){shootCheck++;} //checks if shootpusher has returned to where it should be
+      else {shootPusher.Set(shootPusher.kForward);
         break;}
       if (ColorSensorGet(0,0) >= FRISBEEDETECTED){ //check if frisbee present in shooter
         shootCheck ++;
         shooterLoad.Set(0);
-        break;}
+        //NoFrisbeeCount = 0;
+        if (shootCheck == 2) {ss = ss_shoot;
+        break;}}
       else{
         if (ColorSensorGet(1,0) >= FRISBEEDETECTED || xbox.GetXButton()){ //check if fris. avail for reload
-          shooterLoad.Set(1);}
-          else{frc::SmartDashboard::PutString("Shooter Status", "Out of Ammo!");
-          Shoot = false;
-          shooter1.Set(0);
-          shooter2.Set(0);
           shooterLoad.Set(1);
-          shootTimer.Stop();
-          shootTimer.Reset();
-          break;}}
-        if (shootCheck == 2) {ss = ss_shoot;}
-        break;
-      case ss_shoot:
-        if (ColorSensorGet(1,0) < FRISBEEDETECTED && slidereturn.Get()){ //check if frisbee present in shooter
-          ss = ss_reload;
-          break;}
-        if(xbox.GetTriggerAxis(xbox.kRightHand) >= 90){Shoot = true;}
-        if(Shoot){
-          frc::SmartDashboard::PutString("Shooter Status", "Shooting");
-          shooter1.Set(SHOOTPOWER);
-          shooter2.Set(SHOOTPOWER);
-          if(Shoot != lastshoot){shootTimer.Start();}
-          if (shootTimer.Get() >= 3){shootPusher.Set(shootPusher.kForward);
-          slideTimer.Start();}
-          if (slideTimer.Get() > 3){shootPusher.Set(shootPusher.kReverse);
-          slideTimer.Stop();
-          slideTimer.Reset();}}
-          break;
-
-      case ss_stop:
-          Shoot = false;
+          //NoFrisbeeCount = 0;
+          }
+          else{frc::SmartDashboard::PutString("Shooter Status", "Out of Ammo!");
+          //Shoot = false;
+          NoFrisbeeCount ++;
           shooter1.Set(0);
           shooter2.Set(0);
           shooterLoad.Set(0);
+          //shootTimer.Stop();
+          //shootTimer.Reset();
+          break;}}
+        break;
+      case ss_shoot:
+        if (ColorSensorGet(1,0) >= FRISBEEDETECTED && (!slidereturn.Get()) && ColorSensorGet(0,0) < FRISBEEDETECTED){ //check if frisbee present in shooter
+          ss = ss_reload;
+          break;}
+        frc::SmartDashboard::PutBoolean("Shoot", Shoot);
+        if(xbox.GetTriggerAxis(xbox.kLeftHand) > 0.3){Shoot = false;}
+        else if(xbox.GetTriggerAxis(xbox.kRightHand) > 0.3){Shoot = true;}
+        if (Shoot){
+          shooter1.Set(SHOOTPOWER);
+          shooter2.Set(SHOOTPOWER);
+          shootTimer.Start(); //harmless if called when already running
+          if (shootTimer.Get() >= 1 && shootTimer.Get() <= 2){shootPusher.Set(shootPusher.kReverse);}
+          else if (shootTimer.Get() > 2){
           shootTimer.Stop();
+          shooter1.Set(0);
+          shooter2.Set(0);
+          shootPusher.Set(shootPusher.kForward);
           shootTimer.Reset();
+          }}
+          else {frc::SmartDashboard::PutString("Shooter Status", "Shooting");}
+          break;
+
+      case ss_stop:
+          //Shoot = false; TEMPORARY
+          shooter1.Set(0);
+          shooter2.Set(0);
+          shooterLoad.Set(0);
+          //shootTimer.Stop();
+          //shootTimer.Reset();
           slideTimer.Stop();
           slideTimer.Reset();
           shootPusher.Set(shootPusher.kOff);

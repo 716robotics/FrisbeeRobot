@@ -55,6 +55,7 @@ class Robot : public frc::TimedRobot {
   bool lastshoot = false;
   bool reloadOverride = false;
   int shootCheck = 0;
+  int NoFrisbeeCount = 0; //this is a count of how many cycles the systems goes without seeing a frisbee with EITHER sensor
   
 
  private:
