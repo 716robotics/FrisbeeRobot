@@ -9,8 +9,6 @@
 #include "uglyIncludes.h"
 
 class Robot : public frc::TimedRobot {
-  frc::Joystick leftDriveStick{0};
-  frc::Joystick rightDriveStick{1};
   frc::XboxController xbox{2};
   frc::Jaguar lDrive0{PWMCHANNELDRIVEL0};
   frc::Jaguar lDrive1{PWMCHANNELDRIVEL1};
@@ -48,22 +46,11 @@ class Robot : public frc::TimedRobot {
   void DisabledPeriodic() override;
   void TestInit() override;
   void TestPeriodic() override;
-  void RunFrisbee(int);
+  void RunFrisbee();
   double ColorSensorGet(int,int);
   bool Load = false; //for testing only
   bool Shoot = false;
-  bool lastshoot = false;
-  bool reloadOverride = false;
   int shootCheck = 0;
   int NoFrisbeeCount = 0; //this is a count of how many cycles the systems goes without seeing a frisbee with EITHER sensor
   
-
- private:
-  frc::SendableChooser<std::string> CM_chooser;
-  const std::string kControlMapDefault = "Classic";
-  const std::string kControlMapLowPersonel = "Xbox Only";
-  frc::SendableChooser<std::string> SF_chooser;
-  const std::string kSafteyNone = "None - Only Team Members";
-  const std::string kSafteyDrDm = "Driver Has Deadman";
-  const std::string kSafteyOpDm = "Operator Has Deadman";
 };

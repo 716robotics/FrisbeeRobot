@@ -4,13 +4,6 @@
 #include <iostream>
 
 void Robot::RobotInit() {
-  CM_chooser.SetDefaultOption(kControlMapDefault, kControlMapDefault);
-  CM_chooser.AddOption(kControlMapLowPersonel, kControlMapLowPersonel);
-  frc::SmartDashboard::PutData("Control Mapping", &CM_chooser);
-  SF_chooser.SetDefaultOption(kSafteyNone, kSafteyNone);
-  SF_chooser.AddOption(kSafteyDrDm, kSafteyDrDm);
-  SF_chooser.AddOption(kSafteyOpDm, kSafteyOpDm);
-  frc::SmartDashboard::PutData("E-Stop Behavior", &SF_chooser);
   compressor.Start();
   }
 
@@ -27,14 +20,10 @@ shootPusher.Set(shootPusher.kForward);
 }
 
 void Robot::TeleopPeriodic() {
-  if (CM_chooser.GetSelected() == kControlMapLowPersonel){
     drive.ArcadeDrive(xbox.GetX(xbox.kRightHand), xbox.GetY(xbox.kRightHand), true);
-    RunFrisbee(1);
-  }
-  else {drive.TankDrive(leftDriveStick.GetY(), rightDriveStick.GetY(), true);
-  RunFrisbee(1);
-  }
-
+    RunFrisbee();
+    if (xbox.GetTriggerAxis(xbox.kLeftHand) > 0.3) {ss = ss_stop;}
+    else if (ss == ss_stop) {ss = ss_reload;} //if trigger is NOT held AND stop is already in effect, turn it off
 }
 
 void Robot::DisabledInit() {}
@@ -44,8 +33,8 @@ void Robot::DisabledPeriodic() {}
 void Robot::TestInit() {}
 
 void Robot::TestPeriodic() {
-  drive.TankDrive(leftDriveStick.GetY(), rightDriveStick.GetY(), true);
-  if (xbox.GetXButtonPressed()) {Load=!Load;}
+  drive.ArcadeDrive(xbox.GetX(xbox.kRightHand), xbox.GetY(xbox.kRightHand), true);
+  if (xbox.GetBButtonPressed()) {Load=!Load;}
   if (xbox.GetYButtonPressed()) {Shoot=!Shoot;}
   shooterLoad.Set(float(Load));
   shooters.Set(float(Shoot)*SHOOTPOWER);
@@ -55,10 +44,9 @@ void Robot::TestPeriodic() {
   if (xbox.GetTriggerAxis(xbox.kLeftHand)>0.8) {shootAngle.Set(shootAngle.kReverse);}
 }
 
-void Robot::RunFrisbee(int mode){
-  //if (!deadman) {ss = ss_stop;} not yet implimented
-  if (xbox.GetY(xbox.kRightHand) > 0.7) {shootAngle.Set(shootAngle.kForward);}
-  if (xbox.GetY(xbox.kRightHand) < -0.7) {shootAngle.Set(shootAngle.kReverse);}
+void Robot::RunFrisbee(){
+  if (xbox.GetY(xbox.kLeftHand) > 0.7) {shootAngle.Set(shootAngle.kForward);}
+  if (xbox.GetY(xbox.kLeftHand) < -0.7) {shootAngle.Set(shootAngle.kReverse);}
   std::cout << ss << std::endl;
   switch(ss)
   {
@@ -116,8 +104,8 @@ void Robot::RunFrisbee(int mode){
           shooter1.Set(0);
           shooter2.Set(0);
           shooterLoad.Set(0);
-          //shootTimer.Stop();
-          //shootTimer.Reset();
+          shootTimer.Stop();
+          shootTimer.Reset();
           slideTimer.Stop();
           slideTimer.Reset();
           shootPusher.Set(shootPusher.kOff);
@@ -125,7 +113,6 @@ void Robot::RunFrisbee(int mode){
           frc::SmartDashboard::PutString("Shooter Status", "Halted");
           break;
       }
-lastshoot = Shoot;
 }
 
 double Robot::ColorSensorGet(int sensor, int mode = 0){
