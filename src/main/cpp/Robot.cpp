@@ -71,26 +71,26 @@ void Robot::RunFrisbee(int mode){
       if (ColorSensorGet(0,0) >= FRISBEEDETECTED){ //check if frisbee present in shooter
         shootCheck ++;
         shooterLoad.Set(0);
-        //NoFrisbeeCount = 0;
         if (shootCheck == 2) {ss = ss_shoot;
         break;}}
       else{
         if (ColorSensorGet(1,0) >= FRISBEEDETECTED || xbox.GetXButton()){ //check if fris. avail for reload
           shooterLoad.Set(1);
-          //NoFrisbeeCount = 0;
+          NoFrisbeeCount = 0;
           }
           else{frc::SmartDashboard::PutString("Shooter Status", "Out of Ammo!");
-          //Shoot = false;
           NoFrisbeeCount ++;
-          shooter1.Set(0);
-          shooter2.Set(0);
-          shooterLoad.Set(0);
-          //shootTimer.Stop();
-          //shootTimer.Reset();
+          if (NoFrisbeeCount > 24) {
+            shooter1.Set(0);
+            shooter2.Set(0);
+            shooterLoad.Set(0);
+            Shoot = false;
+            shootTimer.Stop();
+            shootTimer.Reset();}
           break;}}
         break;
       case ss_shoot:
-        if (ColorSensorGet(1,0) >= FRISBEEDETECTED && (!slidereturn.Get()) && ColorSensorGet(0,0) < FRISBEEDETECTED){ //check if frisbee present in shooter
+        if ((!slidereturn.Get()) && ColorSensorGet(0,0) < FRISBEEDETECTED){ //check if frisbee present in shooter
           ss = ss_reload;
           break;}
         frc::SmartDashboard::PutBoolean("Shoot", Shoot);
@@ -100,8 +100,8 @@ void Robot::RunFrisbee(int mode){
           shooter1.Set(SHOOTPOWER);
           shooter2.Set(SHOOTPOWER);
           shootTimer.Start(); //harmless if called when already running
-          if (shootTimer.Get() >= 1 && shootTimer.Get() <= 2){shootPusher.Set(shootPusher.kReverse);}
-          else if (shootTimer.Get() > 2){
+          if (shootTimer.Get() >= 0.75 && shootTimer.Get() <= 1.2){shootPusher.Set(shootPusher.kReverse);}
+          else if (shootTimer.Get() > 1.2){
           shootTimer.Stop();
           shooter1.Set(0);
           shooter2.Set(0);
@@ -112,7 +112,7 @@ void Robot::RunFrisbee(int mode){
           break;
 
       case ss_stop:
-          //Shoot = false; TEMPORARY
+          Shoot = false; 
           shooter1.Set(0);
           shooter2.Set(0);
           shooterLoad.Set(0);
@@ -123,7 +123,6 @@ void Robot::RunFrisbee(int mode){
           shootPusher.Set(shootPusher.kOff);
           shootAngle.Set(shootAngle.kOff);
           frc::SmartDashboard::PutString("Shooter Status", "Halted");
-          //if(deadman) {ss = ss_reload;}
           break;
       }
 lastshoot = Shoot;
